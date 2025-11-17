@@ -6,10 +6,25 @@ import schemas
 import crud
 import security 
 from database import engine, get_db
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Servicio de Links")
+
+origins = [
+    "http://localhost:5173", # React
+    "http://127.0.0.1:5173",
+    "http://localhost:8000", # User Service
+] #Permitimos las solicitudes desde estos orígenes
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+) #Middleware para permitir CORS
 
 # --- ENDPOINT PARA CREAR UN LINK (PROTEGIDO) ---
 @app.post("/links", response_model=schemas.Link, status_code=status.HTTP_201_CREATED)
