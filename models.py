@@ -1,14 +1,11 @@
-#Aqui definire la tabla links
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey # Asegúrate de importar String
 from database import Base
 
 class Link(Base):
     __tablename__ = "links"
-    #Columnas de la tabla
+
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    url = Column(String, unique=True, index=True)
-    #Relacion entre microservicios
-    owner_id = Column(Integer, index=True, nullable=False)
-
-
+    title = Column(String)
+    url = Column(String)
+    image = Column(String, nullable=True) 
+    owner_id = Column(Integer)

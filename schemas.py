@@ -1,20 +1,17 @@
-#Contrato de datos para el servicio de links
 from pydantic import BaseModel, HttpUrl
+from typing import Optional 
 
 class LinkBase(BaseModel):
     title: str
-    url: HttpUrl #Valida que sea una URL correcta
+    url: HttpUrl
+    image: Optional[str] = None # <--- AÑADIR ESTO
 
-#Esquema creacion de link
 class LinkCreate(LinkBase):
     pass
 
-#Esquema de lectura de link
 class Link(LinkBase):
     id: int
     owner_id: int
-    #Configura el modelo para trabajar con ORM
+
     class Config:
         from_attributes = True
-
-    
